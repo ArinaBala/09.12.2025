@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 01</title>
+</head>
+
+<body>
+
+
+    <button id="testBtn" onclick="showMessage1()">Test Button</button>
+
+    <script>
+      
+        function showMessage1() {
+            alert('Сработал inline-обработчик (onclick)');
+        }
+    </script>
+
+    <script>
+       
+        let btn = document.querySelector("#testBtn");
+
+        btn.onclick = showMessage2;
+
+        function showMessage2() {
+            alert('Сработал обработчик через свойство .onclick');
+        }
+    </script>
+
+    <script>
+       
+        let btn2 = document.getElementById("testBtn");
+
+        btn2.addEventListener("click", showMessage3);
+
+        function showMessage3() {
+            alert('Сработал обработчик через addEventListener');
+        }
+    </script>
+
+</body>
+</html>
