@@ -1,39 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task 04</title>
-</head>
-<body>
-    <ul id="list">
-        <li>Яблого</li>
-        <li>Груша</li>
-        <li>Апельсин</li>
-        <li>Мандарин</li>
-        <li>Ананас</li>
-        <li>Слива</li>
-    </ul>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
 
-    <button id="sort-btn">Сортировать</button>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="todo-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Task menu</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
 
     <script>
-        let list = document.querySelector("#list");
-        let sortBtn = document.querySelector("#sort-btn");
+        const url = "https://jsonplaceholder.typicode.com/todos";
 
-        sortBtn.addEventListener("click", function() {
-            let items = document.querySelectorAll("li");
-            let itemsArray = Array.from(items);
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#todo-table tbody");
 
-            itemsArray.sort(function(a, b) {
-                if (a.textContent < b.textContent) return -1;
-                if (a.textContent > b.textContent) return 1;
-                return 0;
+                
+                data.slice(0, 50).forEach(todo => {
+                    const row = document.createElement("tr");
+
+                    const idCell = document.createElement("td");
+                    idCell.textContent = todo.id;
+
+                    const titleCell = document.createElement("td");
+                    titleCell.textContent = todo.title;
+
+                    const completedCell = document.createElement("td");
+                    completedCell.textContent = todo.completed ? "+" : "-";
+
+                    row.appendChild(idCell);
+                    row.appendChild(titleCell);
+                    row.appendChild(completedCell);
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(err => {
+                document.body.innerHTML = '<h3>Произошла ошибка: ${err.message}</h3>';
+                console.error(err);
             });
-
-            itemsArray.forEach(item => list.append(item));
-        });
     </script>
 </body>
+
 </html>
